@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Robot Navigation App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+     <link rel="stylesheet" type="text/css" href="static/css/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <div class="top-bar">
+
+  <div class="menu">
+    <h4 id="title">Robot Navigation System</h4>
+    <button class="menu-button" id="stop_drive">Stop auto_drive</button>
+    <button class="menu-button" id="zoom">Max Zoom</button>
+    <button class="menu-button" id="clear">Clear Map</button>
+  </div>
+</div>
+<div id="content">
+
+
+    <div id="containerMap">
+    <div id="map"></div>
+  </div>
+    <div class="containerController">
+
+      <table>
+   <tr>
+     <td></td>
+     <td><button class="primarybutton" id="go-front">
+    <img src="static/images/front.png"  class="iconButton" alt="Button Icon">
+     </button></td>
+     <td></td>
+   </tr>
+   <tr>
+     <td><button class="primarybutton" id="rotate-right">
+     <img src="static/images/rotateRight.png"  class="iconButton" alt="Button Icon">
+   </button></td>
+     <td><canvas id="canvas" width="60px" height="60px"></canvas></td>
+     <td><button class="primarybutton" id="rotate-left">
+     <img src="static/images/rotateLeft.png"  class="iconButton" alt="Button Icon">
+   </button></td>
+   </tr>
+   <tr>
+     <td></td>
+     <td><button class="primarybutton" id="go-back">
+     <img src="static/images/back.png"  class="iconButton" alt="Button Icon"></button></td>
+     <td></td>
+   </tr>
+ </table>
+
+  </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+    <script src="static/js/move_robot_listeners.js"></script>
+    <script src="static/js/listenerIndex.js"></script>
+    <script src="static/js/orientation_robot.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+
+    <script>
+        var initialLatitude = {{ initial_latitude }}; // Get the initial latitude from Flask
+        var initialLongitude = {{ initial_longitude }}; // Get the initial longitude from Flask
+    </script>
+    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/draw_rettangle.js') }}"></script>
+</div>
+</body>
+</html>

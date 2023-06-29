@@ -1,0 +1,153 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('/static/font/Roboto-Regular.ttf');
+  /* Add additional font weights and styles here */
+}
+:root {
+  --primary-color: #2C3E50;
+  --secondary-color: #E74C3C;
+  --accent-color: #3498DB;
+  --background-color: #F5F5F5;
+  --text-color:#333333
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
+  color:var(--text-color);
+}
+
+h1,h2,h3,h4,p {
+  font-family: 'Roboto', sans-serif;
+}
+#map {
+    height: 300px;
+    width:100%;
+}
+#containerMap{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+table {
+      background-color: var(--background-color);
+      width: 200px;
+      height: 200px;
+      margin: auto;
+      border-spacing: 5px;
+      margin-top: 10px;
+
+    }
+
+    td {
+
+      width: 33.33%;
+      height: 33.33%;
+      border: 0px solid black;
+      text-align: center;
+      vertical-align: middle;
+      background-color: var(--background-color);
+    }
+
+
+.containerController {
+  display: inline;
+
+      width: 100%;
+  }
+
+
+
+
+    .primarybutton {
+
+    display: inline-block;
+    padding: 14px 14px;
+    background-color: var(--primary-color); /* Replace with your desired primary color */
+    color: var(--background-color) /* Text color for contrast, adjust as needed */
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+.iconButton{
+  width:25px;
+  height: 25px;
+}
+  .primarybutton:hover {
+    background-color: var(--accent-color); /* Replace with a darker shade or hover effect color */
+  }
+
+    #canvas {
+
+      border-radius: 4px;
+      background-color: var(--background-color);
+
+    }
+    #content {
+
+  margin-top: 50px; /* Adjust the value to create space below the menu */
+
+}
+    .top-bar {
+      position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    background-color: var(--primary-color);
+    padding: 10px;
+     box-sizing: border-box;
+     display: flex;
+
+
+  }
+  #title {
+
+  color: var(--background-color);
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+
+  margin-right: 30px; /* Add space between title/logo and menu */
+}
+#iconSite{
+  width:15px;
+  height: 15px;
+}
+
+  .menu {
+    display: flex;
+  }
+
+  .menu-button {
+    background-color: transparent;
+  color: var(--background-color);
+  border: none;
+
+
+  margin-right: 12px;
+
+
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+
+  }
+  .menu-button:first-child {
+  border-left: none; /* Remove left border from the first button */
+}
+
+
+
+  .menu-button:hover {
+     border-bottom: 2px solid var(--background-color);
+  }
+.leaflet-control-attribution, .leaflet-control-scale-line{
+  display: none
+}
