@@ -2,41 +2,65 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>3D Image Example</title>
-  <style>
-    body { margin: 0; }
-    canvas { display: block; }
-  </style>
+  <title>Scan Point</title>
+  <link rel="stylesheet" type="text/css" href="static/css/style.css">
+  <script src="static/js/drawScansImage.js"></script>
 </head>
 <body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <div class="top-bar">
+    <div class="menu">
+      <h4 id="title">Robot Navigation System</h4>
+    </div>
+  </div>
+
+  <div id="content">
+    <div id="boxscan">
+      <div>
+        <div class="scanContainer">
+          <h4 class="scanTitle">Ampiezza</h4>
+          <canvas id="canvas2d1" width="180" height="180"></canvas>
+        </div>
+      </div>
+      <div id="box3D">
+        <div class="scanContainer">
+          <h4 class="scanTitle">3D Image</h4>
+          <canvas id="canvas" width="180" height="180"></canvas>
+        </div>
+        <div id="slideAction">
+          <button id="left" class="slidebutton" onclick="slideLeft()">
+            <img src="static/images/slide-Left.png"  class="iconButtonSlide" alt="Button Icon"></button>
+            <p id="currentSlide">0/40</p>
+            <button id="right" class="slidebutton" onclick="slideRight()">
+              <img src="static/images/slide-Right.png"  class="iconButtonSlide" alt="Button Icon"></button>
+            </div>
+          </div>
+          <div>
+            <div class="scanContainer">
+              <h4 class="scanTitle">Fase</h4>
+              <canvas id="canvas2d2" width="180" height="180"></canvas>
+            </div>
+          </div>
+        </div>
+
   <script>
-  // Create a scene
-const scene = new THREE.Scene();
+    var json3DImage = '{{ json_3d_image | tojson | safe }}';  // Retrieve JSON image from Flask
+    var json2D1Image = '{{ json_2d1_image | tojson | safe }}';
+    var json2D2Image = '{{ json_2d1_image | tojson | safe }}';
+    // Parse JSON image
+    var parsedImage = JSON.parse(json3DImage);
+    var parsedImageLenght=parsedImage[0][0].length;
+    parsedImageLenght=parsedImageLenght-1;
+    var parsed2D1Image = JSON.parse(json2D1Image);
+    var parsed2D2Image = JSON.parse(json2D2Image);
+    var currentLayer=0
 
-// Create a camera
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 5;
 
-// Create a renderer
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-
-// Load the GLTF model
-const loader = new THREE.GLTFLoader();
-loader.load('path/to/model.gltf', function(gltf) {
-  scene.add(gltf.scene);
-});
-
-// Render the scene
-function animate() {
-  requestAnimationFrame(animate);
-  renderer.render(scene, camera);
-}
-animate();
-
+    draw3DLayer(currentLayer);
+    draw2DLayer(parsed2D1Image,"canvas2d1");
+    draw2DLayer(parsed2D2Image,"canvas2d2");
 
   </script>
+</div>
 </body>
 </html>

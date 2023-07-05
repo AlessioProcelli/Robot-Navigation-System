@@ -1,54 +1,50 @@
 import utm
 import Coordinates
-import rospy
 from sensor_msgs.msg import NavSatFix
 import ROSManager
-from tf import transformations
 from tf.transformations import euler_from_quaternion
-from tf2_msgs.msg import TFMessage
-from geometry_msgs.msg import TransformStamped
 from sensor_msgs.msg import Imu
-import tf2_ros
 import math
 import Point
 from nav_msgs.msg import Odometry
-POS_NODE='/navsat/fix'
+import ConstantManager
+
+
 class PositionManager:
     
     
     def __init__(self):  
-        print("initPositionM")
         self.ros_mng=ROSManager.ROSManager()
         self.current_rotation=0
-        self.ros_mng.register_subscriber(POS_NODE, NavSatFix, self.take_pos)
-        self.ros_mng.register_subscriber('/imu/data',
+        self.cost_mng=ConstantManager.ConstantManager()
+        self.ros_mng.register_subscriber(self.cost_mng.get_constant("POS_NODE"),
+                                         NavSatFix, self.take_pos)
+        self.ros_mng.register_subscriber(self.cost_mng.get_constant("ROTATION_NODE"),
                                          Imu,self.rotation_callback)
-        self.ros_mng.register_subscriber('/odometry/filtered', Odometry,
+        self.ros_mng.register_subscriber(self.cost_mng.get_constant("LOC_POS_NODE"), Odometry,
                                          self.odometry_callback)
-        rospy.sleep(0.3)
-        print("finePositionM")
         
+        print("PositionManager Connect")
+        
+    # take first robot position    
     def take_pos(self,msg):
-        # Process the received NavSatFix message
-        print("Received NavSatFix message:")
-        print("Latitude:", msg.latitude)
-        print("Longitude:", msg.longitude)
-        print("Altitude:", msg.altitude)
-        print("---------------------------")
+        print("Current NavSatFix position:")
+        print("Latitude:", msg.latitude," Longitude:", msg.longitude)
+        
         initial_cord=Coordinates.Coordinates(msg.latitude,msg.longitude,msg.altitude)
-        # Unsubscribe from the topic
         self.initial_pos=initial_cord
-        self.ros_mng.unsubscribe(POS_NODE)
+        self.ros_mng.unsubscribe(self.cost_mng.get_constant("POS_NODE"))
         
         
+    #update current robot pos    
     def update_pos(self,msg):
         current_cord=Coordinates.Coordinates(msg.latitude,msg.longitude,msg.altitude)
         self.current_pos=current_cord
 
     def find_utm_coords(self,lat, lon):
-        u = utm.from_latlon(lat, lon)
-        east = u[0]
-        north = u[1]
+        u = utm.from_latlon(float(lat), float(lon))
+        east = float(u[0])
+        north = float(u[1])
         return north, east
     
     def find_map_coords(self,point_lat, point_lon):
@@ -60,23 +56,25 @@ class PositionManager:
         point_north, point_east = self.find_utm_coords(point_lat, point_lon)
         X = point_east - datum_east
         Y = point_north - datum_north
-        #print("X and Y coordinates of poin is %f and %f" %(X, Y))
+        
         return X, Y
+    
     def find_lat_lon(self, x, y):
         # Calculate the UTM coordinates of the datum point
         datum_utm = utm.from_latlon(self.initial_pos.latitudine,
                     self.initial_pos.longitudine)
-        datum_easting = datum_utm[0]
+        datum_easting =datum_utm[0]
         datum_northing = datum_utm[1]
         datum_zone_number = datum_utm[2]
         datum_zone_letter = datum_utm[3]
     
         # Calculate the UTM coordinates of the desired point
-        point_easting = x + datum_easting
-        point_northing = y + datum_northing
+        point_easting = datum_easting+x
+        point_northing = datum_northing+y
     
         # Convert UTM coordinates back to latitude and longitude
-        point_latlon = utm.to_latlon(point_easting, point_northing, datum_zone_number, datum_zone_letter)
+        point_latlon = utm.to_latlon(float(point_easting),
+                                     float(point_northing), datum_zone_number, datum_zone_letter)
     
         return point_latlon
         
@@ -97,10 +95,18 @@ class PositionManager:
         
         
         self.current_rotation=yaw
-    
+        
+    # Set Current Position over local map
     def odometry_callback(self,msg):
         x = msg.pose.pose.position.x
         y = msg.pose.pose.position.y
         self.current_pos=Point.Point(x,y)
-        #self.current_pos.print_values()
-        # Use the extracted x and y values as required
+        
+        
+
+
+
+
+
+
+        

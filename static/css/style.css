@@ -1,8 +1,8 @@
 @font-face {
   font-family: 'Roboto';
   src: url('/static/font/Roboto-Regular.ttf');
-  /* Add additional font weights and styles here */
 }
+
 :root {
   --primary-color: #2C3E50;
   --secondary-color: #E74C3C;
@@ -20,15 +20,18 @@ body {
 h1,h2,h3,h4,p {
   font-family: 'Roboto', sans-serif;
 }
+
 #map {
     height: 300px;
     width:100%;
 }
+
 #containerMap{
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 table {
       background-color: var(--background-color);
       width: 200px;
@@ -37,117 +40,168 @@ table {
       border-spacing: 5px;
       margin-top: 10px;
 
-    }
+}
 
-    td {
+td {
 
-      width: 33.33%;
-      height: 33.33%;
-      border: 0px solid black;
-      text-align: center;
-      vertical-align: middle;
-      background-color: var(--background-color);
-    }
+  width: 33.33%;
+  height: 33.33%;
+  border: 0px solid black;
+  text-align: center;
+  vertical-align: middle;
+  background-color: var(--background-color);
+}
 
 
 .containerController {
   display: inline;
+  width: 100%;
+}
 
-      width: 100%;
-  }
+.primarybutton {
+  display: inline-block;
+  padding: 14px 14px;
+  background-color: var(--primary-color); /* Replace with your desired primary color */
+  color: var(--background-color) /* Text color for contrast, adjust as needed */
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-
-
-
-    .primarybutton {
-
-    display: inline-block;
-    padding: 14px 14px;
-    background-color: var(--primary-color); /* Replace with your desired primary color */
-    color: var(--background-color) /* Text color for contrast, adjust as needed */
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
 .iconButton{
   width:25px;
   height: 25px;
 }
-  .primarybutton:hover {
-    background-color: var(--accent-color); /* Replace with a darker shade or hover effect color */
-  }
 
-    #canvas {
-
-      border-radius: 4px;
-      background-color: var(--background-color);
-
-    }
-    #content {
-
-  margin-top: 50px; /* Adjust the value to create space below the menu */
-
+.primarybutton:hover {
+  background-color: var(--accent-color);
 }
-    .top-bar {
-      position: fixed;
+
+#canvasOrientation {
+  border-radius: 4px;
+  background-color: var(--background-color);
+}
+
+#content {
+  margin-top: 50px;
+}
+
+.top-bar {
+    position: fixed;
     top: 0;
     left: 0;
-
     width: 100%;
     background-color: var(--primary-color);
     padding: 10px;
-     box-sizing: border-box;
-     display: flex;
+    box-sizing: border-box;
+    display: flex;
+}
 
 
-  }
-  #title {
-
+#title {
   color: var(--background-color);
   margin-top: 0;
   margin-bottom: 0;
   padding-top: 0;
   padding-bottom: 0;
-
   margin-right: 30px; /* Add space between title/logo and menu */
 }
+
 #iconSite{
   width:15px;
   height: 15px;
 }
 
-  .menu {
+.menu {
     display: flex;
-  }
+}
 
-  .menu-button {
-    background-color: transparent;
+.menu-button {
+  background-color: transparent;
   color: var(--background-color);
   border: none;
-
-
   margin-right: 12px;
-
-
   cursor: pointer;
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
+}
 
-  }
-  .menu-button:first-child {
+.menu-button:first-child {
   border-left: none; /* Remove left border from the first button */
 }
 
-
-
-  .menu-button:hover {
+.menu-button:hover {
      border-bottom: 2px solid var(--background-color);
-  }
+}
+
 .leaflet-control-attribution, .leaflet-control-scale-line{
   display: none
+}
+
+/*for scan page*/
+
+.scanContainer {
+  padding: 3px;
+  background-color: var(--background-color);
+  border: 3px solid var(--primary-color);
+  text-align: center;
+  box-sizing: border-box;
+  padding-bottom:0;
+}
+
+.scanTitle {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    padding: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#boxscan {
+  margin-top: 110px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+#box3D{
+ justify-content: center;
+}
+
+#currentSlide{
+  font-size: 13px;
+}
+
+.slidebutton {
+display: inline-block;
+padding: 1px 1px;
+background-color: var(--background-color); /* Replace with your desired primary color */
+color: var(--background-color) /* Text color for contrast, adjust as needed */
+border: none;
+border-radius: 4px;
+transition: background-color 0.3s ease;
+margin-left:7px;
+margin-right:7px;
+}
+
+.iconButtonSlide{
+  width: 20px;
+  height:20px;
+}
+
+#currentSlide{
+  display: contents;
+}
+
+#slideAction{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
 }

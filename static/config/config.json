@@ -1,0 +1,19 @@
+{
+  "POS_NODE":"/navsat/fix" , 
+  "ROTATION_NODE":"/imu/data",
+  "LOC_POS_NODE":"/odometry/filtered",
+  "VEL_NODE":"/jackal_velocity_controller/cmd_vel",
+  "N_CRIT_POINT":2,
+  "GREEK_PASS":1,
+  "GREEK_DENSITY":10.0,
+  "SPEED":20,
+  "SPEEDANGULAR":15,
+  "NODE_NAME":"Robot_Navigation_System",
+  "DATABASE_PATH":"static/database/",
+  "DATABASE_FILE":"database.json",
+  "NAME_2D1":"-2D1img",
+  "NAME_2D2":"-2D2img",
+  "NAME_3D":"-3Dimg",
+  "EXTENSION":".npy",
+  "FOLDER_PATH":"static/images/scans/"
+}

@@ -3,13 +3,14 @@
 """
 Created on Wed Jun 14 18:58:36 2023
 
-@author: alessio
+@author: Alessio
 """
 
 import rospy
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
-NODENAME="My_Node_Flask"
+import ConstantManager
+
 class ROSManager(object):
     
     _node = None
@@ -18,10 +19,11 @@ class ROSManager(object):
    
     def __new__(cls):
         if cls._instance is None:
-            print('Creating the object')
             cls._instance = super(ROSManager, cls).__new__(cls)
-            rospy.init_node('movebase_client_my',anonymous=True)
+            cost_mng=ConstantManager.ConstantManager()
+            rospy.init_node(cost_mng.get_constant("NODE_NAME"),anonymous=True)
             cls._instance._node=True
+            print("RosManager Created")
         return cls._instance
         
      
@@ -50,27 +52,6 @@ class ROSManager(object):
             rospy.logwarn("Subscriber for topic {} not found.".format(topic))
 
 
-    def sendgoal(self):
-        client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
-        client.wait_for_server()
-        print("Connesso")
-        goal = MoveBaseGoal()
-        goal.target_pose.header.frame_id = 'map'
-        goal.target_pose.pose.position.x = 1
-        goal.target_pose.pose.position.y = 1
-        goal.target_pose.pose.orientation.w = 1
-    
-        client.send_goal(goal)
-        print("Goal inviato aspetto il risultato")
-        wait = client.wait_for_result()
-        print(wait)
-       # If the result doesn't arrive, assume the Server is not available
-        if not wait:
-            rospy.logerr("Action server not available!")
-            rospy.signal_shutdown("Action server not available!")
-        else:
-        # Result of executing the action
-            return client.get_result()
     
     def publish_to_node(self,topic, message_type, queue_size):
         if ROSManager._instance._node is not None:
@@ -78,8 +59,8 @@ class ROSManager(object):
            return pub
         else:
             rospy.logwarn("ROS node is not initialized.")
+            
     def publish_msg(self,pub,msg):
             pub.publish(msg)
-            print("inviato")
             rospy.sleep(1)
            
